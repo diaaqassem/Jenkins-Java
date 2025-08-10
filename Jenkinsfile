@@ -1,10 +1,13 @@
+def COLOR_MAP = [
+    'SUCCESS': 'good',
+    'FAILURE': 'danger'
+]
+
 pipeline{
-    agent {
-        label "java"
-    }
+    agent any
     tools{
-        maven 'mvn-3-5-4'
-        jdk 'java-11'
+        git 'git-1.9'
+        maven 'M3'  
     }
     environment{
         DOCKER_USER = credentials('docker-username')
@@ -27,17 +30,32 @@ pipeline{
                 archiveArtifacts artifacts: '**/*.jar', followSymlinks: false
             }
         }
-        stage("docker build"){
-            steps{
-                sh "docker build -t hassaneid/iti-java:v${BUILD_NUMBER} ."
+        stage("docker build") {
+            steps {
+                sh "docker build -t diaaqassem1/app-java:v${BUILD_NUMBER} ."
                 sh "docker images"
             }
         }
-        // stage("docker push"){
-        //     steps{
-        //         sh "docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}"
-        //         sh "docker push hassaneid/iti-java:v${BUILD_NUMBER}"
-        //     }
-        // }
+        stage("docker push") {
+            steps {
+                sh "echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin"
+                sh "docker push diaaqassem1/app-java:v${BUILD_NUMBER}"
+            }
+        }
+    }
+
+  post {
+        always {
+            echo 'Slack Notifications.'
+            slackSend channel: '#devops',
+                      color: COLOR_MAP[currentBuild.currentResult],
+                      message: "*${currentBuild.currentResult}:* Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} \nMore info at: ${env.BUILD_URL}"
+        }
+        success {
+            echo 'Deployment completed successfully!'
+        }
+        failure {
+            echo 'Deployment failed.'
+        }
     }
 }
