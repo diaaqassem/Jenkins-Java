@@ -66,9 +66,6 @@
 // Shared Lib
 @Library('shared-lib')
 
-properties([
-    disableConcurrentBuilds()
-])
 pipeline {
     agent any
     tools {
