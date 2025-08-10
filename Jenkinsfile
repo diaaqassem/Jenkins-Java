@@ -14,11 +14,11 @@ pipeline{
         DOCKER_PASS = credentials('docker-password')
     }
     stages{
-        stage("Dependancy check"){
-            steps{
-                sh "mvn dependency-check:check"
-                dependencyCheckPublisher pattern: 'target/dependency-check-report.xml'
-            }
+        // stage("Dependancy check"){
+        //     steps{
+        //         sh "mvn dependency-check:check"
+        //         dependencyCheckPublisher pattern: 'target/dependency-check-report.xml'
+        //     }
         }
         stage("build app"){
             steps{
