@@ -79,7 +79,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                mvmInstall()
+                mvn.javaBuild("package install")
             }
         }
         stage('Archive') {
