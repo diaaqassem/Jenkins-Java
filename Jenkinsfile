@@ -64,8 +64,7 @@
 
 
 // Shared Lib
-@Library('shared-lib') _  // Name configured in Jenkins
-
+@Library('shared-lib')
 pipeline {
     agent any
     tools {
@@ -80,7 +79,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                buildApp()
+                mvmInstall()
             }
         }
         stage('Archive') {
