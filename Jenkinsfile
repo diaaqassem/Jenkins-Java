@@ -65,6 +65,10 @@
 
 // Shared Lib
 @Library('shared-lib')
+
+properties([
+    disableConcurrentBuilds()
+])
 pipeline {
     agent any
     tools {
@@ -79,7 +83,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                mvn.javaBuild("package install")
+                org.ITI.mvn.javaBuild("package install")
             }
         }
         stage('Archive') {
