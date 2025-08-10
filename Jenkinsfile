@@ -83,7 +83,8 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                org.ITI.mvn.javaBuild("package install")
+                def mavenBuild = new org.iti.mvn()
+                mavenBuild.javaBuild("package install")
             }
         }
         stage('Archive') {
