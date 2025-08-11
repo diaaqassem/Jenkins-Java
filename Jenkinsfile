@@ -189,10 +189,13 @@ pipeline {
                 sh '''
                 ls
                 rm -rf Java-App-ArgoCD
+                
                 git clone git@github.com:diaaqassem/Java-App-ArgoCD.git
+                pwd
                 ls
                 cd Java-App-ArgoCD
-                sed -i "s|image: .*|image: ${IMAGE_NAME}:${IMAGE_TAG}|" deployment.yaml
+                pwd
+                sed -i "s|image: .*|image: ${IMAGE_NAME}:${IMAGE_TAG}|" Java-App-ArgoCD/deployment.yaml
 
                 git add .
                 git commit -m "update image"
