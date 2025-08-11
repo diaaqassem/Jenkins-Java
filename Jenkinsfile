@@ -81,19 +81,26 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                def mavenBuild = new org.iti.mvn()
-                mavenBuild.javaBuild("package install")
+                    def mavenBuild = new org.iti.mvn()
+                    mavenBuild.javaBuild("package install")
                 }
             }
         }
         stage('Archive') {
             steps {
-                archiveApp()
+                script {
+                    def archiveApp = new org.iti.archiveApp()
+                    archiveApp.archive()
+                }
             }
         }
         stage('Docker Build') {
             steps {
-                dockerBuild(IMAGE_NAME, env.BUILD_NUMBER)
+                   script {
+                    def dockerBuildApp = new org.iti.dockerBuild()
+                    dockerBuildApp.dockerBuild()
+                    dockerBuild(IMAGE_NAME, env.BUILD_NUMBER)
+                }
             }
         }
         stage('Docker Push') {
