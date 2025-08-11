@@ -73,8 +73,6 @@ pipeline {
                 git add .
                 git commit -m "update image"
                 git push
-
-                grep "image:" deployment.yaml
                 '''
                 }
             }
