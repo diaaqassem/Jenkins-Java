@@ -142,7 +142,7 @@ pipeline {
     environment {
         ECR_REPO = 'iti'
         IMAGE_TAG = "${env.BUILD_NUMBER}"
-        IMAGE_NAME = "${485492729952.dkr.ecr.us-east-1.amazonaws.com/${ECR_REPO}"
+        IMAGE_NAME = "485492729952.dkr.ecr.us-east-1.amazonaws.com/${ECR_REPO}"
     }
     stages {
         stage('Build') {
