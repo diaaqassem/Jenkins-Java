@@ -187,7 +187,9 @@ pipeline {
         stage('Deploy to Argo') {
             steps {
                 sh '''
-                git clone https://github.com/diaaqassem/Java-App-ArgoCD.git
+                sh 'rm -rf Java-App-ArgoCD'
+                git clone git@github.com:diaaqassem/Java-App-ArgoCD.git
+
                 cd Java-App-ArgoCD
                 sed -i "s|image: .*|image: ${IMAGE_NAME}:${IMAGE_TAG}|" deployment.yaml
 
