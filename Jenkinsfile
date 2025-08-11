@@ -96,7 +96,7 @@ pipeline {
         }
         stage('Docker Build') {
             steps {
-                   script {
+                script {
                     def dockerBuildApp = new org.iti.dockerBuild()
                     dockerBuildApp.dockerBuild(IMAGE_NAME, env.BUILD_NUMBER)
                 }
@@ -110,7 +110,10 @@ pipeline {
     }
     post {
         always {
-            slackNotify(env.JOB_NAME, env.BUILD_NUMBER, env.BUILD_URL, currentBuild.currentResult)
+               script {
+                    def slackNotify = new org.iti.slackNotify()
+                    slackNotify.slack(env.JOB_NAME, env.BUILD_NUMBER, env.BUILD_URL, currentBuild.currentResult)
+                }
         }
         success {
             echo 'Deployment completed successfully!'
