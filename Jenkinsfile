@@ -182,7 +182,7 @@ pipeline {
                     dockerPushApp.dockerPush(IMAGE_NAME, IMAGE_TAG)
                 }
             }
-            
+        }
 
         stage('Deploy to Argo') {
             steps {
@@ -201,7 +201,6 @@ pipeline {
             }
         }
        
-    }
     post {
         always {
             script {
