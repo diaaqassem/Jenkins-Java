@@ -142,6 +142,7 @@ pipeline {
         maven 'M3'
     }
     environment {
+        AWS_REGION = "us-east-1"
         ECR_REPO = 'iti'
         IMAGE_TAG = "${env.BUILD_NUMBER}"
         IMAGE_NAME = "485492729952.dkr.ecr.us-east-1.amazonaws.com/${ECR_REPO}"
@@ -167,8 +168,7 @@ pipeline {
             steps {
                 script {
                     sh """
-                    aws ecr get-login-password --region ${AWS_REGION} \
-                        | docker login --username AWS --password-stdin ${IMAGE_NAME}
+                    aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${IMAGE_NAME}
                     """
                 }
             }
