@@ -178,6 +178,8 @@ pipeline {
                 script {
                     def dockerBuildApp = new org.iti.dockerBuild()
                     dockerBuildApp.dockerBuild(IMAGE_NAME, IMAGE_TAG)
+                    def dockerPushApp = new org.iti.dockerPush()
+                    dockerPushApp.dockerPush(IMAGE_NAME, IMAGE_TAG)
                 }
             }
         }
