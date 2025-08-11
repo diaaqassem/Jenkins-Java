@@ -68,7 +68,7 @@ pipeline {
                 cd Java-App-ArgoCD
                 pwd
                 ls
-                sed -i "s|image: .*|image: ${IMAGE_NAME}:${IMAGE_TAG}|" deployment.yml
+                sed -i "s|image: .*|image: ${IMAGE_NAME}:v${IMAGE_TAG}|" deployment.yml
 
                 git add .
                 git commit -m "update image"
