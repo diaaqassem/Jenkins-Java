@@ -98,8 +98,7 @@ pipeline {
             steps {
                    script {
                     def dockerBuildApp = new org.iti.dockerBuild()
-                    dockerBuildApp.dockerBuild()
-                    dockerBuild(IMAGE_NAME, env.BUILD_NUMBER)
+                    dockerBuildApp.dockerBuild(IMAGE_NAME, env.BUILD_NUMBER)
                 }
             }
         }
