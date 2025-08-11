@@ -132,7 +132,11 @@
 @Library('shared-lib')_
 
 pipeline {
-    agent any
+    
+    agent { 
+        label 'worker' 
+        }
+
     tools {
         git 'git-1.9'
         maven 'M3'
