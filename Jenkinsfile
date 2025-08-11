@@ -200,7 +200,7 @@ pipeline {
 
                 git add .
                 git commit -m "update image"
-                git push -u origin master
+                git push -u origin fp
 
                 grep "image:" deployment.yaml
                 '''
