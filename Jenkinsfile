@@ -182,55 +182,25 @@ pipeline {
                     dockerPushApp.dockerPush(IMAGE_NAME, IMAGE_TAG)
                 }
             }
+            
+
+        stage('Deploy to Argo') {
+            steps {
+                sh '''
+                git clone https://github.com/diaaqassem/Java-App-ArgoCD.git
+                cd Java-App-ArgoCD
+                sed -i "s|image: .*|image: ${IMAGE_NAME}:${IMAGE_TAG}|" deployment.yaml
+
+                git add .
+                git commit -m "update image"
+                git push -u origin master
+
+                grep "image:" deployment.yaml
+                '''
+                }
+            }
         }
-        // stage('Deploy to Kubernetes') {
-        //     steps {
-        //         withCredentials([file(credentialsId: env.KUBECONFIG_CRED, variable: 'KUBECONFIG_FILE')]) {
-        //             sh """
-        //             export KUBECONFIG=${KUBECONFIG_FILE}
-
-        //             kubectl apply -f - <<EOF
-        //             apiVersion: apps/v1
-        //             kind: Deployment
-        //             metadata:
-        //               name: app-java
-        //               labels:
-        //                 app: app-java
-        //             spec:
-        //               replicas: 2
-        //               selector:
-        //                 matchLabels:
-        //                   app: app-java
-        //               template:
-        //                 metadata:
-        //                   labels:
-        //                     app: app-java
-        //                 spec:
-        //                   containers:
-        //                   - name: app-java
-        //                     image: ${IMAGE_NAME}:${IMAGE_TAG}
-        //                     ports:
-        //                     - containerPort: 8080
-        //             EOF
-
-        //             kubectl apply -f - <<EOF
-        //             apiVersion: v1
-        //             kind: Service
-        //             metadata:
-        //               name: app-java-service
-        //             spec:
-        //               selector:
-        //                 app: app-java
-        //               ports:
-        //               - protocol: TCP
-        //                 port: 80
-        //                 targetPort: 8080
-        //               type: LoadBalancer
-        //             EOF
-        //             """
-        //         }
-        //     }
-        // }
+       
     }
     post {
         always {
